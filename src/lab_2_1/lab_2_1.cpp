@@ -16,7 +16,7 @@ int recurrence = 1;
 int srv_1_recurrence = 500 / SYS_TIC;
 int srv_1_counter = srv_1_recurrence;
 
-int srv_2_recurrence = 1000 / SYS_TIC;
+int srv_2_recurrence = 500 / SYS_TIC;
 int srv_2_counter = srv_2_recurrence;
 
 int srv_3_recurrence = 500 / SYS_TIC;

@@ -9,8 +9,8 @@
 #define INC_BUTTON_PIN 8
 #define DEC_BUTTON_PIN 9
 
-#define BASE_REC 50
-#define MAX 20
+#define BASE_REC 1000
+#define MAX 10
 
 extern byte led_1_state;
 

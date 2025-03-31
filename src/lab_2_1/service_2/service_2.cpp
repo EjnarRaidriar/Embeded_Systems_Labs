@@ -9,8 +9,10 @@ void service_2_setup() {
 }
 
 void service_2_loop() {
-  if (led_1_state == HIGH) {
+  debounce = BASE_REC / recurrence;
+  if (led_1_state == LOW) {
     if (millis() - last_led_change >= debounce) {
+      last_led_change = millis();
       if (led_2_state == LOW) {
         led_2_state = HIGH;
       } else {
@@ -18,7 +20,7 @@ void service_2_loop() {
       }
     }
   } else {
-    led_2_state = HIGH;
+    led_2_state = LOW;
   }
   digitalWrite(LED_2_PIN, led_2_state);
 }
