@@ -1,24 +1,23 @@
 #include "lab/lab.hpp"
 
 #include <Arduino.h>
-#include <avr/io.h>
-#include <avr/interrupt.h>
+#include "stdio_setups/serial_stdio/serail_stdio.hpp"
 
-volatile unsigned int TBAdrr;
+#define SWITCH 2
 
 void lab_setup() {
   Serial.begin(9600);
-  TCCR0A = B01000010;
-  TCCR0B = B00000010;
-  OCR0A = 128;
-  TIMSK0 = B00000010;
-  DDRB = DDRB | B10000000;
-}
-
-ISR(TIMER0_COMPA_vect) {
-  TBAdrr++;
-  Serial.println(TBAdrr, HEX);
+  serial_setup();
+  pinMode(SWITCH, INPUT_PULLUP);
 }
 
 void lab_loop() {
+  int x = analogRead(A1);
+  int y = analogRead(A0);
+  int sStat = digitalRead(SWITCH);
+  printf("x: %d; y: %d;\n", x, y);
+  if (sStat == LOW) {
+    printf("Button is pressed\n");
+  }
+  delay(500);
 }
