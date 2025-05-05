@@ -23,7 +23,7 @@
 
 void button_led_task(void *param);
 void led_blink_task(void *param);
-void monitor_task(void *param);
+void joystick_monitor_task(void *param);
 
 SemaphoreHandle_t button_semaphore;
 QueueHandle_t dataQueue;
@@ -61,7 +61,7 @@ void lab_2_2_setup() {
   );
 
   xTaskCreate(
-    monitor_task,
+    joystick_monitor_task,
     "MonitorTask",
     128,
     NULL,
@@ -115,7 +115,7 @@ void led_blink_task(void *param) {
   }
 }
 
-void monitor_task(void *param) {
+void joystick_monitor_task(void *param) {
   serial_setup();
   uint8_t received_data;
   for (;;) {
