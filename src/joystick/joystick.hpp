@@ -8,6 +8,11 @@ struct JoystickPosition {
   int y;
 };
 
+struct JoystickData {
+  JoystickPosition pos;
+  int button_state;
+};
+
 void joystick_setup(const int &switch_pin);
 int get_x_pos(const uint8_t &x_pin);
 int get_y_pos(const uint8_t &y_pin);

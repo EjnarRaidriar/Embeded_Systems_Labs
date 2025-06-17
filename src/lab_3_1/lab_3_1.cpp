@@ -14,11 +14,6 @@
 #define MONITOR_TASK_REQ 500
 #define JOYSTICK_TASK_REQ 100
 
-struct JoystickData {
-  JoystickPosition pos;
-  int button_state;
-};
-
 #define QUEUE_SIZE 1
 #define QUEUE_DATA_TYPE JoystickData
 
@@ -56,9 +51,6 @@ void joystick_task(void *param) {
       switch_state
     };
     xQueueSend(dataQueue, &data, portMAX_DELAY);
-    // xQueueSend(dataQueue, &pos.x, portMAX_DELAY);
-    // xQueueSend(dataQueue, &pos.y, portMAX_DELAY);
-    // xQueueSend(dataQueue, &switch_state, portMAX_DELAY);
     vTaskDelayUntil(&last_wake_time, pdMS_TO_TICKS(JOYSTICK_TASK_REQ));
   }
 }
