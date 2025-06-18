@@ -1,4 +1,7 @@
 #include "service_2.hpp"
+
+#if APP_NAME == LAB_2_1
+
 #include "../global_var.hpp"
 
 unsigned long last_led_change = millis();
@@ -24,3 +27,5 @@ void service_2_loop() {
   }
   digitalWrite(LED_2_PIN, led_2_state);
 }
+
+#endif

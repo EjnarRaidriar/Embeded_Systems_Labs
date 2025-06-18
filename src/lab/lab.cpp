@@ -1,5 +1,7 @@
 #include "lab/lab.hpp"
 
+#if APP_NAME == LAB
+
 #include <Arduino.h>
 #include "stdio_setups/serial_stdio/serail_stdio.hpp"
 
@@ -21,3 +23,5 @@ void lab_loop() {
   }
   delay(500);
 }
+
+#endif

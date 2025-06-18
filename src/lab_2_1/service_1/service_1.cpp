@@ -1,4 +1,7 @@
 #include "service_1.hpp"
+
+#if APP_NAME == LAB_2_1
+
 #include "../global_var.hpp"
 
 byte button_state = LOW;
@@ -28,3 +31,5 @@ void service_1_loop() {
     toggle_led();
   }
 }
+
+#endif

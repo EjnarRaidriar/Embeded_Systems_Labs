@@ -1,4 +1,7 @@
 #include "lab_1.hpp"
+
+#if APP_NAME == LAB_1
+
 #include "stdio_setups/serial_stdio/serail_stdio.hpp"
 #include "led/led.hpp"
 
@@ -31,3 +34,5 @@ void lab_1_loop() {
     printf("Unknown command\n");
   }
 }
+
+#endif

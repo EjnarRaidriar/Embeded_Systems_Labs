@@ -1,5 +1,7 @@
 #include "lab_2_1.hpp"
 
+#if APP_NAME == LAB_2_1
+
 #include "global_var.hpp"
 
 #include "service_1/service_1.hpp"
@@ -71,3 +73,5 @@ void lab_2_1_loop() {
   printf("mult:  %d\n\n", recurrence);
   delay(SYS_TIC);
 }
+
+#endif

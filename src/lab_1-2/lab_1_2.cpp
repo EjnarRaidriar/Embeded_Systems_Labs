@@ -1,5 +1,7 @@
 #include "lab_1_2.hpp"
 
+#if APP_NAME == LAB_1_2
+
 #include "stdio_setups/keypad_stdio/keypad_stdio.hpp"
 #include "stdio_setups/lcd_stdio/lcd_stdio.hpp"
 
@@ -43,3 +45,5 @@ void lab_1_2_loop() {
     }
   }
 }
+
+#endif

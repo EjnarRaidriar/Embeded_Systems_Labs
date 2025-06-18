@@ -1,14 +1,6 @@
+#include "config.h"
+
 #include <Arduino.h>
-
-#define LAB -1
-#define LAB_0 0
-#define LAB_1 1
-#define LAB_1_2 12
-#define LAB_2_1 21
-#define LAB_2_2 22
-#define LAB_3_1 31
-
-#define APP_NAME LAB_3_1
 
 #if APP_NAME == LAB
   #include "lab/lab.hpp"
@@ -38,6 +30,10 @@
   #include "lab_3_1/lab_3_1.hpp"
   #define SETUP() lab_3_1_setup()
   #define LOOP() lab_3_1_loop()
+#elif APP_NAME == LAB_3_2
+  #include "lab_3_2/lab_3_2.hpp"
+  #define SETUP() lab_3_2_setup()
+  #define LOOP() lab_3_2_loop()
 #endif
 
 

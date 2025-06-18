@@ -1,4 +1,7 @@
 #include "service_3.hpp"
+
+#if APP_NAME == LAB_2_1
+
 #include "../global_var.hpp"
 
 byte inc_button_state = LOW;
@@ -34,3 +37,5 @@ void service_3_loop() {
     }
   }
 }
+
+#endif

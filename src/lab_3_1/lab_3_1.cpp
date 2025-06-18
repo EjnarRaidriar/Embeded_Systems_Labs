@@ -1,5 +1,7 @@
 #include "lab_3_1.hpp"
 
+#if APP_NAME == LAB_3_1
+
 #include <Arduino.h>
 #include <Arduino_FreeRTOS.h>
 #include <semphr.h>
@@ -68,3 +70,5 @@ void monitor_task(void *param) {
     vTaskDelay(pdMS_TO_TICKS(MONITOR_TASK_REQ));
   }
 }
+
+#endif

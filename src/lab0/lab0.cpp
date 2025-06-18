@@ -1,4 +1,7 @@
 #include "lab_0.hpp"
+
+#if APP_NAME == LAB_0
+
 #include <Arduino.h>
 
 #define LED 3
@@ -34,3 +37,5 @@ void lab_0_loop() {
     }
   }
 }
+
+#endif

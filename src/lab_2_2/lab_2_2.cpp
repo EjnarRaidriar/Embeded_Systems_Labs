@@ -1,5 +1,7 @@
 #include "lab_2_2.hpp"
 
+#if APP_NAME == LAB_2_2
+
 #include <Arduino.h>
 #include <Arduino_FreeRTOS.h>
 #include <semphr.h>
@@ -128,3 +130,5 @@ void joystick_monitor_task(void *param) {
     vTaskDelay(pdMS_TO_TICKS(MONITOR_TASK_REQ_TIME));
   }
 }
+
+#endif
