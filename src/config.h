@@ -7,4 +7,4 @@
 #define LAB_3_1 31
 #define LAB_3_2 32
 
-#define APP_NAME LAB_3_2
+#define APP_NAME LAB_3_1
