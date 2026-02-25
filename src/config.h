@@ -13,4 +13,4 @@
 #define LAB_6_1 61
 #define LAB_6_2 62
 
-#define APP_NAME LAB_6_1
+#define APP_NAME LAB_6_2
