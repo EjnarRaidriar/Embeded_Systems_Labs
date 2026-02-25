@@ -34,6 +34,30 @@
   #include "lab_3_2/lab_3_2.hpp"
   #define SETUP() lab_3_2_setup()
   #define LOOP() lab_3_2_loop()
+#elif APP_NAME == LAB_4_1
+  #include "lab_4_1/lab_4_1.hpp"
+  #define SETUP() lab_4_1_setup()
+  #define LOOP() lab_4_1_loop()
+#elif APP_NAME == LAB_4_2
+  #include "lab_4_2/lab_4_2.hpp"
+  #define SETUP() lab_4_2_setup()
+  #define LOOP() lab_4_2_loop()
+#elif APP_NAME == LAB_5_1
+  #include "lab_5_1/lab_5_1.hpp"
+  #define SETUP() lab_5_1_setup()
+  #define LOOP() lab_5_1_loop()
+#elif APP_NAME == LAB_5_2
+  #include "lab_5_2/lab_5_2.hpp"
+  #define SETUP() lab_5_2_setup()
+  #define LOOP() lab_5_2_loop()
+#elif APP_NAME == LAB_6_1
+  #include "lab_6_1/lab_6_1.hpp"
+  #define SETUP() lab_6_1_setup()
+  #define LOOP() lab_6_1_loop()
+#elif APP_NAME == LAB_6_2
+  #include "lab_6_2/lab_6_2.hpp"
+  #define SETUP() lab_6_2_setup()
+  #define LOOP() lab_6_2_loop()
 #endif
 
 

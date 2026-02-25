@@ -18,6 +18,10 @@ int led_v2_read(const int &led) {
   return digitalRead(led);
 }
 
+void led_v2_write(const int &led, uint8_t level) {
+    digitalWrite(led, level);
+}
+
 bool led_v2_is_on(const int &led) {
   return led_v2_read(led) == HIGH;
 }

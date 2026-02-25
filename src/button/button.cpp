@@ -3,7 +3,7 @@
 #include <Arduino.h>
 
 void button_setup() {
-  pinMode(BUTTON_PIN, INPUT);
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
 }
 
 int button_read() {
