@@ -2,6 +2,8 @@
 #define DHT_HPP
 
 #include "DHT_U.h"
+#include <Adafruit_Sensor.h>
+#include <DHT.h>
 #include <Arduino.h>
 
 class DHT_11 {
