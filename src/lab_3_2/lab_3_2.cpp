@@ -18,7 +18,7 @@
 #define mV_MIN 0
 #define mV_MAX 5000
 
-#define MONITOR_TASK_REQ 200
+#define MONITOR_TASK_REQ 100
 #define JOYSTICK_TASK_REQ 100
 
 int weights[BUFFER_SIZE] = {50, 35, 25, 15, 10};

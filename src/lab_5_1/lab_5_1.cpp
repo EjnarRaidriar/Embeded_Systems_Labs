@@ -103,7 +103,7 @@ void monitor_task(void *param) {
     QUEUE_DATA_TYPE state;
 	for (;;) {
 		if (xQueueReceive(xStateQueue, &state, portMAX_DELAY) == pdTRUE) {
-            printf("\n[DATA] Hum: %.1f%% | SetPt: %.1f | Hyst: +/-%.1f | Fan: %s\n",
+            printf("\n[DATA] Hum: %1f%%\n SetPt: %.1f | Hyst: +/-%.1f | Fan: %s\n",
                    (double)state.humidity, 
                    (double)FIXED_SETPOINT, 
                    (double)state.hysteresis,

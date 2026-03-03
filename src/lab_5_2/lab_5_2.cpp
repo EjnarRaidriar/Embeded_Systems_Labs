@@ -4,123 +4,50 @@
 
 #include <Arduino.h>
 #include <Arduino_FreeRTOS.h>
+#include <semphr.h>
 
 #include "stdio_setups/serial_stdio/serail_stdio.hpp"
-#include "dht/dht.hpp"
 
-#define DHT_PIN 2
+#include "lab_5_2_config.hpp"
+#include "speed_task/speed_task.hpp"
+#include "pid_task/pid_task.hpp"
+#include "motor_task/motor_task.hpp"
+#include "monitor_task/monitor_task.hpp"
+#include "input_task/input_task.hpp"
 
+QueueHandle_t rpm_queue;
+QueueHandle_t pwm_queue;
+QueueHandle_t monitor_queue;
+QueueHandle_t setpoint_queue;
+
+volatile long encoder_count = 0;
+
+void encoder_isr() { encoder_count++; }
 
 void lab_5_2_setup() {
 	serial_setup();
-	relay_setup(RELAY_PIN);
 
-	relayOnSemaphore = xSemaphoreCreateBinary();
-	relayOffSemaphore = xSemaphoreCreateBinary();
-	dataQueue = xQueueCreate(QUEUE_SIZE, sizeof(QUEUE_DATA_TYPE));
+	rpm_queue = xQueueCreate(QUEUE_SIZE, sizeof(float));
+	pwm_queue = xQueueCreate(QUEUE_SIZE, sizeof(int));
+	setpoint_queue = xQueueCreate(QUEUE_SIZE, sizeof(float));
+	monitor_queue = xQueueCreate(QUEUE_SIZE, sizeof(monitor_data_t));
 
-	if (relayOnSemaphore == NULL || relayOffSemaphore == NULL) {
-		printf("Error creating semaphores\n");
-		while (1)
-			;
-	}
-
-	if (dataQueue == NULL) {
+	if (rpm_queue == NULL || pwm_queue == NULL || setpoint_queue == NULL || monitor_queue == NULL) {
 		printf("Error creating queue\n");
 		while (1)
 			;
 	}
 
-	xTaskCreate(input_task, "InputTask", 256, NULL, 1, NULL);
-	xTaskCreate(relay_on_task, "RelayOnTask", 128, NULL, 1, NULL);
-	xTaskCreate(relay_off_task, "RelayOffTask", 128, NULL, 1, NULL);
-	xTaskCreate(monitor_task, "MonitorTask", 128, NULL, 1, NULL);
+    attachInterrupt(digitalPinToInterrupt(PIN_MOTOR_ENCODER_C1), encoder_isr,
+            RISING);
+
+    xTaskCreate(pid_task, "PIDTask", 1024, NULL, 2, NULL);
+    xTaskCreate(speed_task, "SpeedTask", 512, NULL, 2, NULL);
+    xTaskCreate(input_task, "InputTask", 512, NULL, 1, NULL);
+	xTaskCreate(motor_task, "MotorTask", 512, NULL, 1, NULL);
+	xTaskCreate(monitor_task, "MonitorTask", 1024, NULL, 1, NULL);
 }
 
 void lab_5_2_loop() {}
 
-#include <semphr.h>
-
-#include "relay/relay.hpp"
-
-#define RELAY_PIN 2
-
-#define MONITOR_TASK_REQ 200
-#define INPUT_TASK_REQ 100
-
-#define QUEUE_SIZE 1
-#define QUEUE_DATA_TYPE bool
-
-QueueHandle_t dataQueue;
-SemaphoreHandle_t relayOnSemaphore;
-SemaphoreHandle_t relayOffSemaphore;
-
-void monitor_task(void *param);
-void input_task(void *param);
-void relay_on_task(void *param);
-void relay_off_task(void *param);
-
-void lab_4_1_setup() {
-}
-
-void lab_4_1_loop() {}
-
-void input_task(void *param) {
-	for (;;) {
-		printf("Commands:\n");
-		printf("\trelay on - turn on the relay\n");
-		printf("\trelay off - turn off the rely\n");
-		char command[25], option[25];
-		scanf("%s %s", command, option);
-		printf("\n");
-		if (strcmp(command, "relay") == 0) {
-			if (strcmp(option, "on") == 0) {
-				xSemaphoreGive(relayOnSemaphore);
-			} else if (strcmp(option, "off") == 0) {
-				xSemaphoreGive(relayOffSemaphore);
-			} else {
-                printf("Unknown command\n");
-            }
-		} else {
-			printf("Unknown command\n");
-		}
-		vTaskDelay(pdMS_TO_TICKS(INPUT_TASK_REQ));
-	}
-}
-
-void relay_on_task(void *param) {
-	for (;;) {
-		if (xSemaphoreTake(relayOnSemaphore, portMAX_DELAY) == pdTRUE) {
-			relay_NO_on(RELAY_PIN);
-			bool data = true;
-			xQueueOverwrite(dataQueue, &data);
-		}
-	}
-}
-
-void relay_off_task(void *param) {
-	for (;;) {
-		if (xSemaphoreTake(relayOffSemaphore, portMAX_DELAY) == pdTRUE) {
-			relay_NO_off(RELAY_PIN);
-			bool data = false;
-			xQueueOverwrite(dataQueue, &data);
-		}
-	}
-}
-
-void monitor_task(void *param) {
-	bool relay_is_on;
-	for (;;) {
-		if (xQueueReceive(dataQueue, &relay_is_on, portMAX_DELAY) == pdTRUE) {
-			if (relay_is_on == true) {
-				printf("Relay turned on\n");
-			} else {
-				printf("Relay turned off\n");
-			}
-		}
-		vTaskDelay(pdMS_TO_TICKS(MONITOR_TASK_REQ));
-	}
-}
-
 #endif
-

@@ -1,5 +1,4 @@
 #include "lab_4_2.hpp"
-#include "l298/l298.hpp"
 
 #if APP_NAME == LAB_4_2
 
@@ -8,6 +7,7 @@
 #include <semphr.h>
 
 #include "stdio_setups/serial_stdio/serail_stdio.hpp"
+#include "l298/l298.hpp"
 
 #define L298_ENA 5
 #define L298_IN1 8
