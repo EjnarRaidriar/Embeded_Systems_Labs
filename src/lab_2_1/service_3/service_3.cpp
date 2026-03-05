@@ -1,7 +1,8 @@
-#include "service_3.hpp"
+#include "config.h"
 
 #if APP_NAME == LAB_2_1
 
+#include "service_3.hpp"
 #include "../global_var.hpp"
 
 byte inc_button_state = LOW;

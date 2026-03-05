@@ -1,13 +1,14 @@
-#include "lab_5_1.hpp"
+#include "config.h"
 
 #if APP_NAME == LAB_5_1
 
+#include "lab_5_1.hpp"
 #include <Arduino.h>
 #include <Arduino_FreeRTOS.h>
 #include <semphr.h>
 
-#include "potentiometer_5k/potentiometer_5k.hpp"
 #include "dht/dht.hpp"
+#include "potentiometer_5k/potentiometer_5k.hpp"
 #include "relay/relay.hpp"
 #include "stdio_setups/serial_stdio/serail_stdio.hpp"
 
@@ -43,7 +44,7 @@ void control_task(void *param);
 void lab_5_1_setup() {
 	serial_setup();
 	relay_setup(RELAY_PIN);
-    dht.setup();
+	dht.setup();
 
 	xControlQueue = xQueueCreate(QUEUE_SIZE, sizeof(QUEUE_DATA_TYPE));
 	xStateQueue = xQueueCreate(QUEUE_SIZE, sizeof(QUEUE_DATA_TYPE));
@@ -62,52 +63,59 @@ void lab_5_1_setup() {
 void lab_5_1_loop() {}
 
 void sensor_task(void *param) {
-    SystemState state;
+	SystemState state;
 	for (;;) {
 		state.humidity = dht.read_humidity();
-        int pot_value = read_potentiometer(POT_PIN);
-        state.hysteresis = 0.5f + ((float)pot_value / 1023.0f) * MAX_HYSTEREZIS;
+		int pot_value = read_potentiometer(POT_PIN);
+		state.hysteresis = 0.5f + ((float)pot_value / 1023.0f) * MAX_HYSTEREZIS;
 
 		if (!isnan(state.humidity)) {
-            xQueueOverwrite(xControlQueue, &state);
+			xQueueOverwrite(xControlQueue, &state);
 		} else {
-            printf("DHT error\n");
-        }
+			printf("DHT error\n");
+		}
 		vTaskDelay(pdMS_TO_TICKS(SENSOR_TASK_REQ));
 	}
 }
 
 void control_task(void *param) {
-    SystemState data;
-    bool relayActive = false;
+	SystemState data;
+	bool relayActive = false;
 
-    for (;;) {
-        if (xQueueReceive(xControlQueue, &data, portMAX_DELAY)) {
-            if (data.humidity > (FIXED_SETPOINT + data.hysteresis)) {
-                relay_NO_on(RELAY_PIN);
-                relayActive = true;
-            } 
-            else if (data.humidity < (FIXED_SETPOINT - data.hysteresis)) {
-                relay_NO_off(RELAY_PIN);
-                relayActive = false;
-            }
+	for (;;) {
+		if (xQueueReceive(xControlQueue, &data, portMAX_DELAY)) {
+			if (data.humidity > (FIXED_SETPOINT + data.hysteresis)) {
+				relay_NO_on(RELAY_PIN);
+				relayActive = true;
+			} else if (data.humidity < (FIXED_SETPOINT - data.hysteresis)) {
+				relay_NO_off(RELAY_PIN);
+				relayActive = false;
+			}
 
-            data.isRelayOn = relayActive;
-            xQueueOverwrite(xStateQueue, &data);
-        }
-        vTaskDelay(pdMS_TO_TICKS(CONTROL_TASK_REQ));
-    }
+			data.isRelayOn = relayActive;
+			xQueueOverwrite(xStateQueue, &data);
+		}
+		vTaskDelay(pdMS_TO_TICKS(CONTROL_TASK_REQ));
+	}
 }
 
 void monitor_task(void *param) {
-    QUEUE_DATA_TYPE state;
+	QUEUE_DATA_TYPE state;
+	char humidity[10];
+	char setpoint[10];
+	char hysteresis[10];
+
+	dtostrf(FIXED_SETPOINT, 6, 2, setpoint);
+
 	for (;;) {
 		if (xQueueReceive(xStateQueue, &state, portMAX_DELAY) == pdTRUE) {
-            printf("\n[DATA] Hum: %1f%%\n SetPt: %.1f | Hyst: +/-%.1f | Fan: %s\n",
-                   (double)state.humidity, 
-                   (double)FIXED_SETPOINT, 
-                   (double)state.hysteresis,
-                   state.isRelayOn ? "ON" : "OFF");
+			dtostrf(state.humidity, 6, 2, humidity);
+			dtostrf(state.hysteresis, 6, 2, hysteresis);
+
+			printf(
+				"\n[DATA] Hum: %s%%\n SetPt: %s | Hyst: +/-%s | Fan: %s\n",
+				humidity, setpoint,
+				hysteresis, state.isRelayOn ? "ON" : "OFF");
 		}
 		vTaskDelay(pdMS_TO_TICKS(MONITOR_TASK_REQ));
 	}

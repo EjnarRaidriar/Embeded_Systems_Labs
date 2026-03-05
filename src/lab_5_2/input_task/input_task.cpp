@@ -1,3 +1,7 @@
+#include "config.h"
+
+#if APP_NAME == LAB_5_2
+
 #include "input_task.hpp"
 #include "lab_5_2/lab_5_2_config.hpp"
 
@@ -37,3 +41,5 @@ void input_task(void *param) {
 		vTaskDelay(pdMS_TO_TICKS(INPUT_TASK_REQ));
 	}
 }
+
+#endif

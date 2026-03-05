@@ -1,7 +1,8 @@
-#include "lab_0.hpp"
+#include "config.h"
 
 #if APP_NAME == LAB_0
 
+#include "lab_0.hpp"
 #include <Arduino.h>
 
 #define LED 3

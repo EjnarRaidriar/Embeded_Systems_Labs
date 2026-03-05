@@ -1,5 +1,4 @@
 #include "lab_6_2.hpp"
-#include "photoresistor/photoresistor.hpp"
 
 #if APP_NAME == LAB_6_2
 
@@ -7,6 +6,7 @@
 #include <Arduino_FreeRTOS.h>
 #include <queue.h>
 
+#include "photoresistor/photoresistor.hpp"
 #include "button_v2/button_v2.hpp"
 #include "led_v2/led_v2.hpp"
 #include "stdio_setups/serial_stdio/serail_stdio.hpp"

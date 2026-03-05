@@ -1,7 +1,8 @@
-#include "lab_4_2.hpp"
+#include "config.h"
 
 #if APP_NAME == LAB_4_2
 
+#include "lab_4_2.hpp"
 #include <Arduino.h>
 #include <Arduino_FreeRTOS.h>
 #include <semphr.h>

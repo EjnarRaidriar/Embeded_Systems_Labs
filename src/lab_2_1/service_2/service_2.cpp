@@ -1,7 +1,8 @@
-#include "service_2.hpp"
+#include "config.h"
 
 #if APP_NAME == LAB_2_1
 
+#include "service_2.hpp"
 #include "../global_var.hpp"
 
 unsigned long last_led_change = millis();

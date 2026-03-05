@@ -1,3 +1,7 @@
+#include "config.h"
+
+#if APP_NAME == LAB_5_2
+
 #include "speed_task.hpp"
 #include "lab_5_2/lab_5_2_config.hpp"
 
@@ -22,3 +26,5 @@ void speed_task(void *param) {
 		xQueueSend(rpm_queue, &rpm, 0);
 	}
 }
+
+#endif

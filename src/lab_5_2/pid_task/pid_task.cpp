@@ -1,3 +1,7 @@
+#include "config.h"
+
+#if APP_NAME == LAB_5_2
+
 #include "pid_task.hpp"
 #include "lab_5_2/lab_5_2_config.hpp"
 
@@ -46,3 +50,5 @@ void pid_task(void *parma) {
 		}
 	}
 }
+
+#endif

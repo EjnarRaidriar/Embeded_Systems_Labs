@@ -1,7 +1,8 @@
-#include "lab_2_1.hpp"
+#include "config.h"
 
 #if APP_NAME == LAB_2_1
 
+#include "lab_2_1.hpp"
 #include "global_var.hpp"
 
 #include "service_1/service_1.hpp"

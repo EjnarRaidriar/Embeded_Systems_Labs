@@ -1,3 +1,7 @@
+#include "config.h"
+
+#if APP_NAME == LAB_5_2
+
 #include "monitor_task.hpp"
 #include "lab_5_2/lab_5_2_config.hpp"
 
@@ -18,3 +22,5 @@ void monitor_task(void *param) {
 		}
 	}
 }
+
+#endif

@@ -1,7 +1,8 @@
-#include "lab_3_2.hpp"
-#include "filter/filter.hpp"
+#include "config.h"
 #if APP_NAME == LAB_3_2
 
+#include "lab_3_2.hpp"
+#include "filter/filter.hpp"
 #include <Arduino.h>
 #include <Arduino_FreeRTOS.h>
 #include <semphr.h>

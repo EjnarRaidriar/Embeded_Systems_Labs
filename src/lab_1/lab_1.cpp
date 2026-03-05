@@ -1,7 +1,8 @@
-#include "lab_1.hpp"
+#include "config.h"
 
 #if APP_NAME == LAB_1
 
+#include "lab_1.hpp"
 #include "stdio_setups/serial_stdio/serail_stdio.hpp"
 #include "led/led.hpp"
 

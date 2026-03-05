@@ -1,7 +1,8 @@
-#include "lab_1_2.hpp"
+#include "config.h"
 
 #if APP_NAME == LAB_1_2
 
+#include "lab_1_2.hpp"
 #include "stdio_setups/keypad_stdio/keypad_stdio.hpp"
 #include "stdio_setups/lcd_stdio/lcd_stdio.hpp"
 
